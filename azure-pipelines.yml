@@ -9,6 +9,9 @@ trigger:
 pool:
   name: Default
 
+variables:
+  dateToday: $(Get-Date -Format yyyyMMdd)
+
 steps:
 
 - task: CopyFiles@2
@@ -19,5 +22,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Build-$(date:yyyyMMdd)$(rev:.r)'
+    ArtifactName: 'Build-$(Build.BuildNumber)'
     publishLocation: 'Container'

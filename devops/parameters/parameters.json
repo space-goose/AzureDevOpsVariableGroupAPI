@@ -1,0 +1,5 @@
+{
+    "name": "Parameters template for ${envName}",
+    "commonValue": "example of a param which is common to all envs",
+    "environmentDesc": "${desc}"
+}

@@ -1,0 +1,22 @@
+{
+    "description": "Variable Groups Example",
+    "name": "example variable group created via rest api",
+    "variables": {
+        "variable1":{
+            "isSecret":false,
+            "value": "variable1-value"
+        },
+        "variable2":{
+            "isSecret":false,
+            "value": "variable2-value"
+        },        
+        "variable3":{
+            "isSecret":false,
+            "value": "variable3-value"
+        },        
+        "variable4":{
+            "isSecret":false,
+            "value": "variable4-value"
+        }
+    }
+}

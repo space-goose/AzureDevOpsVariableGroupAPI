@@ -1,0 +1,32 @@
+{
+	"description": "variable group managed via rest api",
+	"name": "variable group demo",
+    "variableGroupProjectReferences": [
+        {
+            "description": "variable group managed via rest api",
+	        "name": "variable group demo",
+            "projectReference" : {
+                "id": "3f28ac8b-d429-42e4-bd0c-8c26e26d1d2e",
+                "name": "VariableGroupAPI"
+            }
+        }
+    ],
+    "variables": {
+        "variable1":{
+            "isSecret":false,
+            "value": "variable1-value"
+        },
+        "variable2":{
+            "isSecret":false,
+            "value": "variable2-value"
+        },        
+        "variable3":{
+            "isSecret":false,
+            "value": "variable3-value"
+        },        
+        "variable4":{
+            "isSecret":false,
+            "value": "variable4-value"
+        }
+    }
+}

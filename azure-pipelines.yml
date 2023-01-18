@@ -6,21 +6,67 @@
 trigger:
 - main
 
-pool:
-  name: Default
-
 variables:
   dateToday: $(Get-Date -Format yyyyMMdd)
 
-steps:
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      name: Default
 
-- task: CopyFiles@2
-  inputs:
-    sourceFolder: $(Build.SourcesDirectory)
-    targetFolder: $(Build.ArtifactStagingDirectory)
-    
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Build-$(Build.BuildNumber)'
-    publishLocation: 'Container'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(Build.SourcesDirectory)
+        targetFolder: $(Build.ArtifactStagingDirectory)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'Build-$(Build.BuildNumber)'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  jobs:
+  - job: dev
+    pool:
+      name: Default
+    steps:
+    - checkout: none #skip checking out the default repository resource
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts'
+      inputs:
+        artifactName: 'Build-$(Build.BuildNumber)'
+        downloadPath: $(System.DefaultWorkingDirectory) 
+    - task: replacetokens@5
+      inputs:
+        rootDirectory: '$(Build.SourcesDirectory)/variableGroups'
+        targetFiles: './dev/*.json;!./dev/commonVars.json'
+        encoding: 'auto'
+        tokenPattern: 'custom'
+        tokenPrefix: '$('
+        tokenSuffix: ')$'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        variableFiles: './dev/commonVars.json'
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: false
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Obtain list of parameter files from env directory
+          $files = Get-ChildItem "$(Build.SourcesDirectory)/variableGroups/dev" -Exclude commonVars.json | % { $_.FullName }
+          Write-Host "##vso[task.setvariable variable=paramFiles;]$files"
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host $(paramFiles)
+
+  

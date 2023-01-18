@@ -1,4 +1,5 @@
 {
-    "envName": "DEV",
-    "desc": "Development"
+    "keyVault": "$(keyVault)$",
+    "appService": "$(appService)$",
+    "commonValue": "example of a param which is common to all envs",
 }

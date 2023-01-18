@@ -1,4 +1,6 @@
 {
-    "envName": "UAT",
-    "desc": "User Acceptance Testing"
+    "keyVault": "$(keyVault)$",
+    "appService": "$(appService)$",
+    "commonValue": "$(commonValue)$",
+    "uniqueValue": "959599595"
 }

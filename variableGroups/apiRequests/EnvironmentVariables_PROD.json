@@ -1,10 +1,10 @@
 {
 	"description": "variable group managed via rest api",
-	"name": "DEV environment variables 22",
+	"name": "PROD environment variables",
     "variableGroupProjectReferences": [
         {
             "description": "variable group managed via rest api",
-	        "name": "DEV environment variables 22",
+	        "name": "PROD environment variables",
             "projectReference" : {
                 "name": "VariableGroupAPI"
             }
@@ -13,19 +13,19 @@
     "variables": {
         "envName":{
             "isSecret":false,
-            "value": "dev"
+            "value": "PROD"
         },
         "envDescription":{
             "isSecret":false,
-            "value": "Development"
+            "value": "Production"
         },        
         "hostName":{
             "isSecret":false,
-            "value": "dev.theta.co.nz"
+            "value": "prod.$(domain)$"
         },        
         "contactEmail":{
             "isSecret":false,
-            "value": "tom@theta.co.nz"
+            "value": "$(contactEmail)$"
         }
     }
 }

@@ -1,0 +1,31 @@
+{
+	"description": "variable group managed via rest api",
+	"name": "SIT environment variables",
+    "variableGroupProjectReferences": [
+        {
+            "description": "variable group managed via rest api",
+	        "name": "SIT environment variables",
+            "projectReference" : {
+                "name": "VariableGroupAPI"
+            }
+        }
+    ],
+    "variables": {
+        "envName":{
+            "isSecret":false,
+            "value": "SIT"
+        },
+        "envDescription":{
+            "isSecret":false,
+            "value": "System Integration Test"
+        },        
+        "hostName":{
+            "isSecret":false,
+            "value": "test.$(domain)$"
+        },        
+        "contactEmail":{
+            "isSecret":false,
+            "value": "$(contactEmail)$"
+        }
+    }
+}

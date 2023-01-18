@@ -1,0 +1,31 @@
+{
+	"description": "variable group managed via rest api",
+	"name": "DEV environment variables",
+    "variableGroupProjectReferences": [
+        {
+            "description": "variable group managed via rest api",
+	        "name": "DEV environment variables",
+            "projectReference" : {
+                "name": "VariableGroupAPI"
+            }
+        }
+    ],
+    "variables": {
+        "envName":{
+            "isSecret":false,
+            "value": "DEV"
+        },
+        "envDescription":{
+            "isSecret":false,
+            "value": "Development"
+        },        
+        "hostName":{
+            "isSecret":false,
+            "value": "dev.$(domain)$"
+        },        
+        "contactEmail":{
+            "isSecret":false,
+            "value": "$(contactEmail)$"
+        }
+    }
+}

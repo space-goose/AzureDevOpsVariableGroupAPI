@@ -18,11 +18,11 @@
         },
         "maxVMs":{
             "isSecret":false,
-            "value": "2"
+            "value": "$(maxVms)$"
         },        
         "scaling":{
             "isSecret":false,
-            "value": "Manual"
+            "value": "$(scaling)$"
         }
     }
 }

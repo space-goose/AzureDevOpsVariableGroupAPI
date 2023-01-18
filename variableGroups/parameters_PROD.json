@@ -1,0 +1,9 @@
+{
+    "env": "PROD",
+    "envDescription": "Production",
+    "projectName": "VariableGroupAPI",
+    "contactEmail": "tom@theta.co.nz",
+    "domain": "@theta.co.nz",
+    "maxVMs": 5,
+    "scaling": "Automatic"
+}

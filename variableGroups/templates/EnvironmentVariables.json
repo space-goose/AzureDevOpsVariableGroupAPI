@@ -17,7 +17,7 @@
         },
         "envDescription":{
             "isSecret":false,
-            "value": "Development"
+            "value": "$(envDescription)$"
         },        
         "hostName":{
             "isSecret":false,

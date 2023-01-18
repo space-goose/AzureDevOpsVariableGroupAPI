@@ -1,0 +1,28 @@
+{
+    "description": "$(env)$ VMSS Defaults",
+	"name": "$(env)$ VMSS",
+    "variableGroupProjectReferences": [
+        {
+            "description": "$(env)$ VMSS Defaults",
+	        "name": "$(env)$ VMSS",
+            "projectReference" : {
+                "name": "$(projectName)"
+            }
+        }
+    ],
+
+    "variables": {
+        "initVMs":{
+            "isSecret":false,
+            "value": "1"
+        },
+        "maxVMs":{
+            "isSecret":false,
+            "value": "2"
+        },        
+        "scaling":{
+            "isSecret":false,
+            "value": "Manual"
+        }
+    }
+}

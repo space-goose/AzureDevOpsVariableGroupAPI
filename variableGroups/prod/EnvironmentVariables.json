@@ -1,15 +1,8 @@
 {
-	"description": "variable group managed via rest api",
-	"name": "PROD environment variables",
-    "variableGroupProjectReferences": [
-        {
-            "description": "variable group managed via rest api",
-	        "name": "PROD environment variables",
-            "projectReference" : {
-                "name": "VariableGroupAPI"
-            }
-        }
-    ],
+
+    "groupDescription": "PROD Environment Variables created via REST API",
+    "groupName": "PROD Environment Variables",
+    "projectName": "VariableGroupAPI",
     "variables": {
         "envName":{
             "isSecret":false,

@@ -1,0 +1,20 @@
+{
+
+    "groupDescription": "PROD VMSS Defaults",
+    "groupName": "PROD VMSS",
+    "projectName": "VariableGroupAPI",
+    "variables": {
+        "initVMs":{
+            "isSecret":false,
+            "value": "2"
+        },
+        "maxVMs":{
+            "isSecret":false,
+            "value": "5"
+        },        
+        "scaling":{
+            "isSecret":false,
+            "value": "Automatic"
+        }
+    }
+}

@@ -1,4 +1,6 @@
 {
-    "envName": "PROD",
-    "desc": "Production"
+    "keyVault": "$(keyVault)$",
+    "appService": "$(appService)$",
+    "commonValue": "$(commonValue)$",
+    "uniqueValue": "999999"
 }

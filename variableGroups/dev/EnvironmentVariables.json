@@ -1,19 +1,19 @@
 {
-	"description": "variable group managed via rest api",
-	"name": "DEV environment variables",
+    "description": "$(env)$ Environment Variables created via REST API",
+	"name": "$(env)$ Environment Variables",
     "variableGroupProjectReferences": [
         {
-            "description": "variable group managed via rest api",
-	        "name": "DEV environment variables",
+            "description": "$(env)$ Environment Variables created via REST API",
+	        "name": "$(env)$ Environment Variables",
             "projectReference" : {
-                "name": "VariableGroupAPI"
+                "name": "$(projectName)"
             }
         }
     ],
     "variables": {
         "envName":{
             "isSecret":false,
-            "value": "DEV"
+            "value": "$(env)$"
         },
         "envDescription":{
             "isSecret":false,
@@ -21,7 +21,7 @@
         },        
         "hostName":{
             "isSecret":false,
-            "value": "dev.$(domain)$"
+            "value": "$(env).$(domain)$"
         },        
         "contactEmail":{
             "isSecret":false,

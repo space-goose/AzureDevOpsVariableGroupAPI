@@ -1,15 +1,8 @@
 {
-	"description": "variable group managed via rest api",
-	"name": "SIT environment variables",
-    "variableGroupProjectReferences": [
-        {
-            "description": "variable group managed via rest api",
-	        "name": "SIT environment variables",
-            "projectReference" : {
-                "name": "VariableGroupAPI"
-            }
-        }
-    ],
+
+    "groupDescription": "SIT Environment Variables created via REST API",
+    "groupName": "SIT Environment Variables",
+    "projectName": "VariableGroupAPI",
     "variables": {
         "envName":{
             "isSecret":false,

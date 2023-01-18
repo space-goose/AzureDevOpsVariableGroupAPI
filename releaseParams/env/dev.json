@@ -1,5 +1,6 @@
 {
     "keyVault": "$(keyVault)$",
     "appService": "$(appService)$",
-    "commonValue": "example of a param which is common to all envs",
+    "commonValue": "$(commonValue)$",
+    "uniqueValue": "12345"
 }

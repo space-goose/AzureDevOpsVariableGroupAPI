@@ -42,7 +42,7 @@ stages:
     - task: replacetokens@5
       inputs:
         rootDirectory: '$(Build.SourcesDirectory)/variableGroups'
-        targetFiles: './dev/*.json;!./dev/commonVars.json'
+        targetFiles: '/dev/*.json;!/dev/commonVars.json'
         encoding: 'auto'
         tokenPattern: 'custom'
         tokenPrefix: '$('
@@ -52,7 +52,7 @@ stages:
         keepToken: false
         actionOnNoFiles: 'continue'
         enableTransforms: false
-        variableFiles: './dev/commonVars.json'
+        variableFiles: '/dev/commonVars.json'
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: false

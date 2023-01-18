@@ -6,7 +6,7 @@
             "description": "$(env)$ VMSS Defaults",
 	        "name": "$(env)$ VMSS",
             "projectReference" : {
-                "name": "$(projectName)"
+                "name": "$(projectName)$"
             }
         }
     ],

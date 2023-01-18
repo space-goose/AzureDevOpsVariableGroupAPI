@@ -6,7 +6,7 @@
             "description": "$(env)$ Environment Variables created via REST API",
 	        "name": "$(env)$ Environment Variables",
             "projectReference" : {
-                "name": "$(projectName)"
+                "name": "$(projectName)$"
             }
         }
     ],
@@ -21,7 +21,7 @@
         },        
         "hostName":{
             "isSecret":false,
-            "value": "$(env).$(domain)$"
+            "value": "$(env)$.$(domain)$"
         },        
         "contactEmail":{
             "isSecret":false,

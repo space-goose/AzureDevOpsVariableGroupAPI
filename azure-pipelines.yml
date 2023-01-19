@@ -13,9 +13,9 @@ parameters:
 - name: environmentNames
   type: object
   default: 
-    - 'DEV'
-    - 'SIT'
-    - 'PROD'
+  - 'DEV'
+  - 'SIT'
+  - 'PROD'
 
 stages:
 - stage: Build

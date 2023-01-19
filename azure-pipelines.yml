@@ -7,7 +7,8 @@ trigger:
 - main
 
 variables:
-  dateToday: $(Get-Date -Format yyyyMMdd)
+- name: adminEmail
+  value: thomas.heade@theta.co.nz
 
 stages:
 - stage: Build
@@ -30,3 +31,21 @@ stages:
 - template: azure-deployment-template.yml
   parameters: 
     environment: DEV
+    dependsOn: Build
+    requiresApproval: false
+    adminEmail: ${{variables.adminEmail}}
+- template: azure-deployment-template.yml
+  parameters: 
+    environment: SIT
+    dependsOn: DEV_deployment
+    requiresApproval: true
+    adminEmail: ${{variables.adminEmail}}
+- template: azure-deployment-template.yml
+  parameters: 
+    environment: PROD
+    dependsOn: SIT_deployment
+    requiresApproval: true
+    adminEmail: ${{variables.adminEmail}}
+
+
+

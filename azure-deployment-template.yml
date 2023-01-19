@@ -1,9 +1,33 @@
 parameters:
 - name: environment
   type: string
-- stage: Build
+- name: dependsOn
+  type: string
+- name: requiresApproval
+  type: boolean
+- name: adminEmail
+  type: string
+stages:
+- stage: ${{parameters.environment}}_deployment
+  dependsOn: ${{parameters.dependsOn}}
   jobs:
-  - job: ${{parameters.environment}} deployment
+  - job: waitForApproval
+    condition: eq('${{ parameters.requiresApproval }}', true)
+    displayName: Wait for deployment approval 
+    pool: server    
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:   
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        notifyUsers: |
+          test@test.com
+          example@example.com
+        instructions: 'Please validate the build configuration and resume'
+        onTimeout: 'reject'
+  - job: ${{parameters.environment}}_deployment
+    dependsOn: 'waitForApproval'
+    condition: in(dependencies.waitForApproval.result, 'Succeeded', 'Skipped')
     pool:
       name: Default
     steps:
@@ -15,7 +39,7 @@ parameters:
         downloadPath: $(System.DefaultWorkingDirectory) 
     - task: replacetokens@5
       inputs:
-        rootDirectory: '$(Build.SourcesDirectory)/variableGroups'
+        rootDirectory: '$(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/variableGroups'
         targetFiles: '**/templates/*.json'
         encoding: 'auto'
         tokenPattern: 'custom'
@@ -26,7 +50,7 @@ parameters:
         keepToken: false
         actionOnNoFiles: 'continue'
         enableTransforms: false
-        variableFiles: '**/parameters_${{parameters.environment}}$.json'
+        variableFiles: '**/parameters_${{parameters.environment}}.json'
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: false
@@ -35,10 +59,8 @@ parameters:
         targetType: 'inline'
         script: |
           # Obtain list of parameter files from env directory
-          $files = Get-ChildItem "$(Build.SourcesDirectory)/variableGroups/templates" | % { $_.FullName }
-          Write-Host "##vso[task.setvariable variable=paramFiles;]$files"
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host $(paramFiles)
+          $files = Get-ChildItem "$(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/variableGroups/templates" | % { $_.FullName }
+          Foreach ($file in $files) {
+            $returnVal = $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/GetVariableGroupId.ps1 $(devOpsPAT) $(orgName) $file
+            $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/CreateVariableGroup.ps1 $(devOpsPAT) $(orgName) $file $returnVal
+          }

@@ -12,7 +12,10 @@ variables:
 parameters:
 - name: environmentNames
   type: object
-  default: ['DEV','SIT', 'PROD']
+  default: 
+    - 'DEV'
+    - 'SIT'
+    - 'PROD'
 
 stages:
 - stage: Build

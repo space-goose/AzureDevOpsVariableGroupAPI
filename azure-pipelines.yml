@@ -9,14 +9,6 @@ trigger:
 variables:
   dateToday: $(Get-Date -Format yyyyMMdd)
 
-parameters:
-- name: environmentNames
-  type: object
-  default: 
-  - 'DEV'
-  - 'SIT'
-  - 'PROD'
-
 stages:
 - stage: Build
   jobs:
@@ -35,10 +27,9 @@ stages:
         ArtifactName: 'Build-$(Build.BuildNumber)'
         publishLocation: 'Container'
 
-- ${{ each environmentName in parameters.environmentNames }} :
-- stage: $${{environmentName}}
+- stage: DEV
   jobs:
-  - job: $${{environmentName}}
+  - job: Deploy
     pool:
       name: Default
     steps:
@@ -61,7 +52,48 @@ stages:
         keepToken: false
         actionOnNoFiles: 'continue'
         enableTransforms: false
-        variableFiles: '**/parameters_$${{ environmentName }}.json'
+        variableFiles: '**/parameters_DEV.json'
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: false
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Obtain list of parameter files from env directory
+          $files = Get-ChildItem "$(Build.SourcesDirectory)/variableGroups/templates" | % { $_.FullName }
+          Write-Host "##vso[task.setvariable variable=paramFiles;]$files"
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host $(paramFiles)
+- stage: SIT
+  jobs:
+  - job: Deploy
+    pool:
+      name: Default
+    steps:
+    - checkout: none #skip checking out the default repository resource
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts'
+      inputs:
+        artifactName: 'Build-$(Build.BuildNumber)'
+        downloadPath: $(System.DefaultWorkingDirectory) 
+    - task: replacetokens@5
+      inputs:
+        rootDirectory: '$(Build.SourcesDirectory)/variableGroups'
+        targetFiles: '**/templates/*.json'
+        encoding: 'auto'
+        tokenPattern: 'custom'
+        tokenPrefix: '$('
+        tokenSuffix: ')$'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        variableFiles: '**/parameters_SIT.json'
         enableRecursion: false
         useLegacyPattern: false
         enableTelemetry: false

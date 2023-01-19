@@ -1,6 +1,0 @@
-{
-    "keyVault": "$(keyVault)$",
-    "appService": "$(appService)$",
-    "commonValue": "$(commonValue)$",
-    "uniqueValue": "12345"
-}

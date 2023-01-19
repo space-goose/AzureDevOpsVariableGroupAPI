@@ -1,0 +1,6 @@
+{
+    "keyVault": "kv-theta-t1-$(envName)$-01",
+    "appService": "as-theta-t1-$(envName)$-01",
+    "commonValue": "example of a param which is common to all envs",
+    "uniqueValue": "$(uniqueValue)$"
+}

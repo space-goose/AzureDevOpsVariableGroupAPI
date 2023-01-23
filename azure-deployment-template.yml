@@ -61,6 +61,8 @@ stages:
           # Obtain list of parameter files from env directory
           $files = Get-ChildItem "$(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/variableGroups/templates" | % { $_.FullName }
           Foreach ($file in $files) {
-            $returnVal = $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/GetVariableGroupId.ps1 $(devOpsPAT) $(orgName) $file
-            $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/CreateVariableGroup.ps1 $(devOpsPAT) $(orgName) $file $returnVal
+            $returnVal = $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/GetVariableGroupId.ps1 $env:SYSTEM_ACCESSTOKEN $(orgName) $file
+            $(System.DefaultWorkingDirectory)/Build-$(Build.BuildNumber)/scripts/CreateVariableGroup.ps1 $env:SYSTEM_ACCESSTOKEN $(orgName) $file $returnVal
           }
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)

@@ -1,4 +1,4 @@
-# Security Policy
+## Security Policy
 
 [theta.co.nz/.well-known/security.txt](https://theta.co.nz/.well-known/security.txt)
 

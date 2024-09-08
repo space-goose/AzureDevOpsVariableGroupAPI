@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    # branches:
+    #   - main 
+     
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.5
+        with:
+          fetch-depth: 0 # 
+      # Additional steps specified here
+      - name: Release
+        if: github.ref == 'refs/heads/main'
+        uses: gembaadvantage/uplift-action@v2.0.2
+        with:
+          args: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
